@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: ubuntu:20.04
+From: ubuntu:latest
 
 
 %setup
@@ -14,16 +14,18 @@ From: ubuntu:20.04
         apt -y install tzdata
         apt -y install abyss velvet trinityrnaseq spades exonerate
         apt -y install python3-pip git
-        git clone https://github.com/juliema/aTRAM.git
-        pip3 install --user --requirement aTRAM/requirements.txt
         apt -y install vim
-	apt -y install python3-venv
-	python3 -m venv venv
+        apt -y install python3-virtualenv
+        git clone https://github.com/juliema/aTRAM.git
+        cd aTRAM
+        virtualenv -p python3.9 venv
+        source ./venv/bin/activate
+        pip3 install --requirement requirements.txt
 
 %environment
         export DEBIAN_FRONTEND=noninteractive
         export PATH=$PATH:/usr/lib/
         export PATH=$PATH:/usr/bin/
         export PATH=$PATH:/usr/lib/python3
-	#export PATH=$PATH:/aTRAM
+        export PATH=$PATH:/aTRAM
         export LC_ALL=C
