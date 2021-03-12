@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: ubuntu:latest
+From: ubuntu:20.04
 
 
 %setup
@@ -27,5 +27,5 @@ From: ubuntu:latest
         export PATH=$PATH:/usr/lib/
         export PATH=$PATH:/usr/bin/
         export PATH=$PATH:/usr/lib/python3
-        export PATH=$PATH:/aTRAM
+        #export PATH=$PATH:/aTRAM
         export LC_ALL=C
