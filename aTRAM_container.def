@@ -1,0 +1,28 @@
+Bootstrap: docker
+From: ubuntu:latest
+
+
+%setup
+        #commands here are 1st executed on host system outside of container
+        #after base OS has been installed.
+
+%runscript
+        echo "This is what happens when you run the container..."
+
+%post
+        apt -y update
+        apt -y install tzdata
+        apt -y install abyss velvet trinityrnaseq spades exonerate
+        apt -y install python3-pip git
+        git clone https://github.com/juliema/aTRAM.git
+        pip3 install --user --requirement aTRAM/requirements.txt
+        apt -y install vim
+	#pip3 install virtualenv
+
+%environment
+        export DEBIAN_FRONTEND=noninteractive
+        export PATH=$PATH:/usr/lib/
+        export PATH=$PATH:/usr/bin/
+        export PATH=$PATH:/usr/lib/python3
+	export PATH=$PATH:/aTRAM
+        export LC_ALL=C
