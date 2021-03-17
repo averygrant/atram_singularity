@@ -22,3 +22,17 @@ gunzip tutorial_end_1.fasta.gz
 gunzip tutorial_end_2.fasta.gz
 cd ../..
 ```
+
+Enter the virtual environment
+```
+source venv/bin/activate
+```
+
+Install biopython and psutil
+```
+pip install biopython psutil
+```
+
+Copy over/edit run_preprocessor.sh and run_atram.sh.
+
+Run preprocessor first to create library and atram second.
