@@ -7,10 +7,7 @@ From: ubuntu:20.04
         #after base OS has been installed.
 
 %runscript
-        echo "This is what happens when you run the container..."
-
-%files
-	/datapool/data/ecomorph_selection/atram_lib/Famar.tar.gz ../aTRAM
+        echo "Welcome to the aTRAM container! Happy you to have you here."
 
 %post
         apt -y update
@@ -23,16 +20,6 @@ From: ubuntu:20.04
         apt -y install python3-venv
         python3.8 -m venv venv
         pip3 install --requirement requirements.txt
-	mkdir temp
-	mkdir atram_out
-	cd atram_out
-	mkdir test
-	cd ../
-	mkdir atram_lib
-	cd /aTRAM/doc/data
-	gunzip tutorial_end_1.fasta.gz
-	gunzip tutorial_end_2.fasta.gz
-	cd ../..
 
 %environment
         export DEBIAN_FRONTEND=noninteractive
