@@ -17,7 +17,7 @@ mkdir atram_out
 mkdir temp
 mkdir data
 ```
-Add your raw data and query files to the data directory and libraries to the atram_lib directory. You may put your data in different directory names but you will need to make sure the pathing is correct in future steps.
+Add your raw data and query files to the data directory and libraries to the atram_lib directory. You can separate raw data and query files if you'd like (e.g. add query files to 'target' directory. You may put your data in different directory names but you will need to make sure the pathing is correct in future steps.
 
 # Bind paths
 
