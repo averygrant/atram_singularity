@@ -1,0 +1,57 @@
+Using aTRAM Singularity Container
+
+
+Building container
+1. Install both Singularity and Git if they are not already
+   1. Singularity: https://sylabs.io/guides/3.0/user-guide/installation.html 
+   2. Git: https://gist.github.com/derhuerst/1b15ff4652a867391f03 
+2. Clone github repository for aTRAM container:
+   1.  git clone https://github.com/averygrant/atram_singularity.git
+   2. In the directory where you run the command above, once the cloning is finished  there should be a directory called aTRAM_singularity.
+   3. Move into that directory
+3. Make sure singularity is executable from this path
+4. To create an image, execute the following command: 
+   1. sudo singularity build aTRAM_container.sif aTRAM_definition.def
+   2. An image is a package of software that contains all the things necessary to run aTRAM (in this instance). 
+   3. sudo: best practice to create the container image using sudo to make sure you have permission to access files. 
+   4. You can name the image file (SIF; Singularity Image File) whatever you’d like. This is what you will use when executing the container.
+   5. aTRAM_definition.def: This is the definition file with the code to create the container. 
+   6. Tip: If you try to build the container but it fails due to a lack of space, you can add a temporary directory option:
+      1. sudo singularity build --tmpdir /path/to/larger/dir aTRAM_container.sif aTRAM_definition.def
+      2. This will allow you to access more space during the building process.
+   7. Building the container can take a significant amount of time. 
+
+
+Running aTRAM with the container
+*Note: There are a few different ways to do this.
+1. Create the necessary directories
+mkdir temp
+mkdir atram_out
+mkdir atram_lib
+mkdir data
+mkdir target
+   1. temp: directory for aTRAM to write temporary files to. You can keep these files by including the --keep-temp-dir argument in the run_atram.py script.
+   2. atram_out: Output fasta files will go here (assembled genes)
+   3. atram_lib: Directory for all library (multiple shards)
+   4. data: Directory that holds raw data (paired end sequence files)
+   5. target: Directory with your query/target fasta file
+      1. You don’t need to create a new data or target directory. You can use the path to where your data currently is but it can sometimes be easier to have all files in the same directory. 
+2. Bind paths
+   1. You will need to bind the paths between your local computer and the container. The paths in the container should be as shown below but if you are getting errors you can always enter the container and get the full path using ‘pwd’
+      1. Enter the container: singularity shell <container>.sif
+   2. Edit the following command to bind paths and run:
+export SINGULARITY_BIND="/path/to/temp/:/aTRAM/temp,/path/to/atram_out/:/aTRAM/atram_out,/path/to/atram_lib:/aTRAM/atram_lib/,/path/to/data/:/aTRAM/data, /path/to/target/:/aTRAM/target/"
+      2. The format for binding paths is <local directory>:<directory in container>
+
+
+3. Run preprocessor
+   1. Open run_atram.sand edit paths to match how you bound your paths to the container from above.
+   2. Run run_preprocessor.sh:
+      1. sh run_preprocessor.sh
+   3. Once the run is finished, you should have multiple files in the atram_lib directory.
+4. Run aTRAM
+   1. Open run_atram.sh and edit paths to match how you bound your paths to the container from above.
+   2. Run run_atram.sh:
+      1. sh run_atram.sh
+   3. It may be best to run this (and run_preprocessor.sh) in screen because they may take a while to finish. Run time depends on computing power and data size.
+   4. Output will be found in atram_out. You can check this directory as aTRAM is running to see output files.
